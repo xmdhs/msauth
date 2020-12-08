@@ -10,12 +10,14 @@ import (
 func main() {
 	code, err := auth.Getcode()
 	ok := true
+	var errmsg string
 	if err != nil {
 		ok = false
+		errmsg = err.Error()
 	}
 	i := info{
 		Ok:   ok,
-		Err:  err.Error(),
+		Err:  errmsg,
 		Code: code,
 	}
 	b, err := json.Marshal(i)
