@@ -23,6 +23,7 @@ func newPage(b *rod.Browser, url string) (*rod.Page, error) {
 }
 
 func getCode(page *rod.Page) (string, error) {
+	defer page.Close()
 	for {
 		info, err := page.Info()
 		if err != nil {
@@ -50,6 +51,7 @@ var (
 
 func Getcode() (string, error) {
 	b, err := newBrowser(false)
+	defer b.Close()
 	if err != nil {
 		return "", fmt.Errorf("Getcode: %w", err)
 	}
