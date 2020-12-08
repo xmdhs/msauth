@@ -32,7 +32,13 @@ func getCode(page *rod.Page) (string, error) {
 		if err != nil {
 			return "", fmt.Errorf("getCode: %w", err)
 		}
-		if u.Hostname() != "login.live.com" {
+		pass := false
+		for _, v := range whitelist {
+			if v == u.Hostname() {
+				pass = true
+			}
+		}
+		if !pass {
 			return "", ErrHostname
 		}
 		code := u.Query().Get("code")
@@ -43,6 +49,8 @@ func getCode(page *rod.Page) (string, error) {
 		return code, nil
 	}
 }
+
+var whitelist = []string{"login.live.com", "github.com", "login.microsoft.com"}
 
 var (
 	ErrHostname = errors.New("ErrHostname")
