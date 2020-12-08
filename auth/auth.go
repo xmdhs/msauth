@@ -23,7 +23,6 @@ func newPage(b *rod.Browser, url string) (*rod.Page, error) {
 }
 
 func getCode(page *rod.Page) (string, error) {
-	defer page.Close()
 	for {
 		info, err := page.Info()
 		if err != nil {
@@ -56,6 +55,7 @@ func Getcode() (string, error) {
 		return "", fmt.Errorf("Getcode: %w", err)
 	}
 	page, err := newPage(b, oauthURL)
+	defer page.Close()
 	if err != nil {
 		return "", fmt.Errorf("Getcode: %w", err)
 	}
