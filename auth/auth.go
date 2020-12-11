@@ -11,7 +11,6 @@ import (
 
 func Getcode() (string, error) {
 	if path := lorca.LocateChrome(); path == "" {
-		lorca.PromptDownload()
 		return "", ErrNotInstallChrome
 	}
 	ui, err := newUI()
