@@ -38,7 +38,8 @@ var ErrNotInstallChrome = errors.New("ErrNotInstallChrome")
 var whitelist = []string{"login.live.com", "github.com", "login.microsoft.com", ""}
 
 var (
-	ErrHostname = errors.New("ErrHostname")
+	ErrHostname       = errors.New("ErrHostname")
+	ErrChromeWasClose = errors.New("ErrChromeWasClose")
 )
 
 func getCode(ui lorca.UI) (string, error) {
@@ -60,7 +61,12 @@ func getCode(ui lorca.UI) (string, error) {
 		code := u.Query().Get("code")
 		if code == "" {
 			time.Sleep(1 * time.Second)
-			continue
+			select {
+			case <-ui.Done():
+				return "", ErrChromeWasClose
+			default:
+				continue
+			}
 		}
 		return code, nil
 	}
