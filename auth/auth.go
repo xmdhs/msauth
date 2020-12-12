@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/zserge/lorca"
+	"github.com/xmdhs/lorca"
 )
 
 func Getcode() (string, error) {
