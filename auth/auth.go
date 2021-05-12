@@ -9,11 +9,11 @@ import (
 	"github.com/xmdhs/lorca"
 )
 
-func Getcode() (string, error) {
+func Getcode(dir string) (string, error) {
 	if path := lorca.LocateChrome(); path == "" {
 		return "", ErrNotInstallChrome
 	}
-	ui, err := newUI()
+	ui, err := newUI(dir)
 	if err != nil {
 		return "", fmt.Errorf("Getcode: %w", err)
 	}
@@ -25,8 +25,8 @@ func Getcode() (string, error) {
 	return code, nil
 }
 
-func newUI() (lorca.UI, error) {
-	ui, err := lorca.New(oauthURL, "", 800, 600)
+func newUI(dir string) (lorca.UI, error) {
+	ui, err := lorca.New(oauthURL, dir, 800, 600)
 	if err != nil {
 		return nil, fmt.Errorf("newUI: %w", err)
 	}
