@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	code, err := auth.Getcode()
+	code, err := auth.Getcode("")
 	ok := true
 	var errmsg string
 	if err != nil {
